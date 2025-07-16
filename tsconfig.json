@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "paths": {
+      "@fxfn/dal": ["./src/index.ts"],
+      "@fxfn/dal/*": ["./src/*"],
+    }
+  }
+}

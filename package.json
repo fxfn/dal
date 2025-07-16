@@ -1,0 +1,25 @@
+{
+  "name": "@fxfn/dal",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "packageManager": "pnpm@10.6.0",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    }
+  },
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "@fxfn/inject": "workspace:*",
+    "@libsql/client": "^0.15.7",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "drizzle-orm": "^0.43.1"
+  }
+}
