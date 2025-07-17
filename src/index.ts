@@ -9,6 +9,8 @@ export function createDb<TSchema extends Record<string, unknown>>(url: string, s
 
 export * from "./interfaces/data-provider"
 export * from "./errors"
+export * from "./interfaces/repository"
+export * from "./services/repository"
 
 export * as sqlite from "./lib/sqlite"
 export * as pg from "./lib/pg"
