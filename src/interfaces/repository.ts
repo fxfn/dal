@@ -2,15 +2,25 @@ import { SQLiteTableWithColumns } from "drizzle-orm/sqlite-core"
 import { SQL } from "drizzle-orm"
 
 // Base repository interface with explicit type parameters
-export interface IRepository<TSelect, TInsert> {
-  create(data: TInsert): Promise<TSelect>
-  update(id: string, data: Partial<TInsert>): Promise<TSelect>
-  delete(id: string): Promise<boolean>
-  getBy(filter?: SQL): Promise<TSelect[]>
-  getAll(): Promise<TSelect[]>
-  get(id: string): Promise<TSelect>
-  getCustom?(id: string): Promise<any>
+export abstract class IRepository<TSelect, TInsert> {
+  abstract create(data: TInsert): Promise<TSelect>
+  abstract update(id: string, data: Partial<TInsert>): Promise<TSelect>
+  abstract delete(id: string): Promise<boolean>
+  abstract getBy(filter?: SQL): Promise<TSelect[]>
+  abstract getAll(): Promise<TSelect[]>
+  abstract get(id: string): Promise<TSelect>
+  abstract getCustom?(id: string): Promise<any>
 }
+
+// Type to extract only tables from a mixed schema
+export type ExtractTables<T> = {
+  [K in keyof T]: T[K] extends SQLiteTableWithColumns<any> ? T[K] : never
+}
+
+// Type to get table keys only
+export type TableKeys<T> = {
+  [K in keyof T]: T[K] extends SQLiteTableWithColumns<any> ? K : never
+}[keyof T]
 
 // Helper types for extracting entity types from a repository
 export type Entity<T> = T extends IRepository<infer TSelect, any> ? TSelect : never

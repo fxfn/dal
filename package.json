@@ -6,6 +6,12 @@
   "packageManager": "pnpm@10.6.0",
   "main": "./src/index.ts",
   "exports": {
+    "./sqlite": {
+      "default": "./src/lib/sqlite.ts"
+    },
+    "./pg": {
+      "default": "./src/lib/pg.ts"
+    },
     ".": {
       "default": "./src/index.ts"
     }

@@ -1,19 +1,8 @@
 import { inject } from "@fxfn/inject"
 import { MissingDataProviderError, RecordNotFoundError } from "@fxfn/dal"
-import { IRepository } from "../interfaces/repository"
+import { ExtractTables, IRepository, TableKeys } from "../interfaces/repository"
 import { IDataProvider } from "../interfaces/data-provider"
-import { SQLiteTableWithColumns } from "drizzle-orm/sqlite-core"
 import { and, eq, sql, SQL } from "drizzle-orm"
-
-// Type to extract only tables from a mixed schema
-type ExtractTables<T> = {
-  [K in keyof T]: T[K] extends SQLiteTableWithColumns<any> ? T[K] : never
-}
-
-// Type to get table keys only
-type TableKeys<T> = {
-  [K in keyof T]: T[K] extends SQLiteTableWithColumns<any> ? K : never
-}[keyof T]
 
 export class BaseRepository<
   TSchema extends Record<string, any>,
