@@ -9,10 +9,12 @@ import {
   boolean,
   index,
   uniqueIndex,
-  customType
+  customType,
+  jsonb
 } from "drizzle-orm/pg-core"
 
 export const table = pgTable
+export const json = jsonb
 
 export { text, date, integer, boolean, index, unique, uniqueIndex, customType }
 

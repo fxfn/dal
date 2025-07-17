@@ -13,6 +13,10 @@ import {
 
 export const table = sqliteTable
 
+export function json(columnName: string) {
+  return text(columnName, { mode: 'json' })
+}
+
 export { text, unique, integer, index, uniqueIndex, customType }
 
 export const boolean = (columnName: string) => {
