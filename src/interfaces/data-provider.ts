@@ -1,4 +1,4 @@
-import { createDb } from "@fxfn/dal/index"
+import { createDb } from "@fxfn/dal"
 
 export const DataProviderDatabaseURL = Symbol.for('DataProviderDatabaseURL')
 

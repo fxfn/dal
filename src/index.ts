@@ -1,9 +1,10 @@
 import { drizzle } from "drizzle-orm/libsql/node"
 import { createClient } from "@libsql/client"
+import { Logger } from "drizzle-orm"
 
-export function createDb<TSchema extends Record<string, unknown>>(url: string, schema: TSchema) {
+export function createDb<TSchema extends Record<string, unknown>>(url: string, schema: TSchema, logger?: boolean | Logger) {
   const client = createClient({ url })
-  const result = drizzle({ client, schema, logger: true })
+  const result = drizzle({ client, schema, logger })
   return result
 }
 
