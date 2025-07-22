@@ -40,7 +40,10 @@ export class BaseRepository<
 
   async update(id: string, data: Partial<TTable['$inferInsert']>): Promise<TTable['$inferSelect']> {
     const result = await this.db.update(this.schema)
-      .set(data as any)
+      .set({
+        ...data as any,
+        updatedat: new Date()
+      })
       .where(eq((this.schema as any).id, id))
       .returning()
       .get()
