@@ -59,20 +59,30 @@ export class BaseRepository<
       throw new RecordNotFoundError(`${this.tableName} with id '${id}' not found`)
     }
 
-    const result = await this.db.update(this.schema)
-      .set({
-        ...entity as any,
-        isdeleted: true,
-        deletedat: new Date()
-      })
-      .where(eq((this.schema as any).id, id))
-      .returning()
-      .get()
-
+    let result: TTable['$inferSelect'] | undefined
+    if ('isdeleted' in this.schema) {
+      result = await this.db.update(this.schema)
+        .set({
+          isdeleted: true,
+          deletedat: new Date()
+        })
+        .where(eq((this.schema as any).id, id))
+        .returning()
+        .get()
+    }
+    else {
+      result = await this.db.delete(this.schema)
+        .where(
+          eq(this.schema.id, id)
+        )
+        .returning()
+        .get()
+    }
+      
     if (result) {
       await this.onDelete(result as TTable['$inferSelect'])
     }
-
+    
     return !!result
   }
 
@@ -84,7 +94,7 @@ export class BaseRepository<
     return await this.query.findMany({
       where: and(
         filter ?? undefined,
-        eq((this.schema as any).isdeleted, false)
+        'isdeleted' in this.schema ? eq((this.schema as any).isdeleted, false) : sql`1=1`
       )
     }) as TTable['$inferSelect'][]
   }
@@ -92,7 +102,9 @@ export class BaseRepository<
   async getAll(): Promise<TTable['$inferSelect'][]> {
     return await this.db.select()
       .from(this.schema)
-      .where(eq((this.schema as any).isdeleted, false)) as TTable['$inferSelect'][]
+      .where(
+        'isdeleted' in this.schema ? eq((this.schema as any).isdeleted, false) : sql`1=1`
+      ) as TTable['$inferSelect'][]
   }
 
   async get(id: string): Promise<TTable['$inferSelect']> {
