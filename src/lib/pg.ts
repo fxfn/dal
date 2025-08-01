@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { pgTable } from "drizzle-orm/pg-core";
+import { pgSchema, pgTable } from "drizzle-orm/pg-core";
 
 import {
   text,
@@ -10,9 +10,10 @@ import {
   index,
   uniqueIndex,
   customType,
-  jsonb
+  jsonb,
 } from "drizzle-orm/pg-core"
 
+export const schema = pgSchema
 export const table = pgTable
 export const json = jsonb
 

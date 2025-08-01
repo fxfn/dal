@@ -20,12 +20,15 @@
   "publishConfig": {
     "access": "restricted"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "@fxfn/inject": "workspace:*",
     "@libsql/client": "^0.15.7",
     "@paralleldrive/cuid2": "^2.2.2",
-    "drizzle-orm": "^0.43.1"
+    "drizzle-orm": "^0.43.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10"
   }
 }
